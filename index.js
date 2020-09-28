@@ -9,12 +9,8 @@ server.use(bodyParser.json());
 const morgan = require('morgan');
 server.use(morgan('dev'));
 
-const { client, updatePost, getPostById } = require('./db');
+const { client } = require('./db');
 client.connect();
-
-server.listen(PORT, () => {
-  console.log('The server is up on port', PORT);
-});
 
 server.get('/background/:color', (req, res, next) => {
   res.send(`
@@ -41,4 +37,8 @@ server.use((req, res, next) => {
   console.log('<_____Body Logger END_____>');
 
   next();
+});
+
+server.listen(PORT, () => {
+  console.log('The server is up on port', PORT);
 });
