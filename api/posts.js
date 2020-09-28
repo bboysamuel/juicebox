@@ -124,20 +124,6 @@ postsRouter.get('/', async (req, res) => {
       // keep a post if it is either active, or if it belongs to the current user
 
       return post.active || (req.user && post.author.id === req.user.id);
-
-      // ------- original way to write it. longer but makes more sense. I like this long  way better.
-      // the post is active, doesn't matter who it belongs to
-      // if (post.active) {
-      //   return true;
-      // }
-
-      // // the post is not active, but it belogs to the current user
-      // if (req.user && post.author.id === req.user.id) {
-      //   return true;
-      // }
-
-      // if none of the above are true
-      return false;
     });
 
     res.send({
