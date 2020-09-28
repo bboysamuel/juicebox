@@ -66,12 +66,7 @@ async function updateUser(id, fields = {}) {
   }
 }
 
-async function createPost({
-  authorId,
-  title,
-  content,
-  tags = [], // this is new
-}) {
+async function createPost({ authorId, title, content, tags = [] }) {
   try {
     const {
       rows: [post],
@@ -301,6 +296,13 @@ async function getPostById(postId) {
       [postId]
     );
 
+    if (!post) {
+      throw {
+        name: 'PostNotFoundError',
+        message: 'Could not find a post with that postId',
+      };
+    }
+
     const { rows: tags } = await client.query(
       `
       SELECT tags.*
@@ -384,4 +386,6 @@ module.exports = {
   addTagsToPost,
   getAllTags,
   getUserByUsername,
+  getPostById,
+  getPostsByTagName,
 };
